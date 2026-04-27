@@ -16,7 +16,7 @@ const Navbar = () => {
       <nav className="container flex items-center justify-between h-20" aria-label="Primary">
         <a href="#top" className="flex items-center gap-2 group">
           <span className="font-serif text-2xl font-semibold text-primary leading-none">
-            The Family<span className="text-accent">.</span>
+            The Family Clinic<span className="text-accent">.</span>
           </span>
           <span className="hidden sm:inline text-xs uppercase tracking-[0.2em] text-muted-foreground border-l border-border pl-2 ml-1">
             Skin · Hair · Laser
