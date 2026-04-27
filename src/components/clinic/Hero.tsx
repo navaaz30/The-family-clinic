@@ -8,18 +8,26 @@ import { toast } from "sonner";
 const Hero = () => {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
-const [phone, setPhone] = useState("");
-const [date, setDate] = useState("");   
+  const [phone, setPhone] = useState("");
+  const [date, setDate] = useState("");
+
+  // ✅ NEW: loading state added
+  const [loading, setLoading] = useState(false);
 
   const handleBooking = async () => {
+  if (loading) return; // 🚫 prevent double click
+
   if (!name || !phone || !date) {
     toast.error("Please fill all fields ⚠️");
     return;
   }
+
   if (phone.length !== 10) {
-  toast.error("Enter valid phone number");
-  return;
-}
+    toast.error("Enter valid phone number");
+    return;
+  }
+
+  setLoading(true); // ✅ start loading
 
   const { error } = await supabase.from("appointments").insert([
     {
@@ -31,18 +39,27 @@ const [date, setDate] = useState("");
 
   if (error) {
     console.error(error);
-    toast.error("Booking failed ❌");
+
+    // ✅ NEW: handle duplicate booking error
+    if (error.code === "23505") {
+      toast.error("You already booked for this date ⚠️");
+    } else {
+      toast.error("Booking failed ❌");
+    }
+
   } else {
-   toast.success("Booking saved ✅. We will contact you shortly.");
+    toast.success("Booking saved ✅. We will contact you shortly.");
 
-// close form
-setShowForm(false);
+    // close form
+    setShowForm(false);
 
-// clear form
-setName("");
-setPhone("");
-setDate("");
+    // clear form
+    setName("");
+    setPhone("");
+    setDate("");
   }
+
+  setLoading(false); // ✅ stop loading
 };
 
   return (
@@ -73,7 +90,6 @@ setDate("");
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              {/* ✅ FIXED BUTTON */}
               <Button onClick={() => setShowForm(true)} variant="hero" size="lg">
                 <Phone className="size-4" /> Book a Consultation
               </Button>
@@ -126,39 +142,42 @@ setDate("");
         </div>
       </section>
 
-      {/* ✅ POPUP FIXED (INSIDE RETURN) */}
+      {/* POPUP */}
       {showForm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-xl w-80">
             <h2 className="text-xl font-bold mb-4">Book Appointment</h2>
 
             <input
-            placeholder="Name"
-  value={name}
-  onChange={(e) => setName(e.target.value)}
-  className="w-full mb-3 p-2 border rounded"
-/>
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full mb-3 p-2 border rounded"
+            />
 
-<input
-  placeholder="Phone"
-  value={phone}
-  onChange={(e) => setPhone(e.target.value)}
-  className="w-full mb-3 p-2 border rounded"
-/>
+            <input
+              placeholder="Phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full mb-3 p-2 border rounded"
+            />
 
-<input
-  type="date"
-  value={date}
-  onChange={(e) => setDate(e.target.value)}
-  className="w-full mb-3 p-2 border rounded"
-/>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="w-full mb-3 p-2 border rounded"
+            />
 
-            {/* ✅ CONNECTED BUTTON */}
+            {/* ✅ UPDATED BUTTON */}
             <button
               onClick={handleBooking}
-              className="w-full bg-primary text-white p-2 rounded"
+              disabled={loading}
+              className={`w-full p-2 rounded ${
+                loading ? "bg-gray-400" : "bg-primary text-white"
+              }`}
             >
-              Submit
+              {loading ? "Booking..." : "Submit"}
             </button>
 
             <button
