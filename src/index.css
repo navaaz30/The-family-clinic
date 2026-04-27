@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* The Family Skin Hair & Laser Clinic — design system
+   Warm rose / blush / deep plum medical-luxury aesthetic.
+   All colors HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 30 40% 98%;
+    --foreground: 340 30% 14%;
+
+    --card: 30 40% 99%;
+    --card-foreground: 340 30% 14%;
+
+    --popover: 30 40% 99%;
+    --popover-foreground: 340 30% 14%;
+
+    /* Deep plum primary */
+    --primary: 340 45% 22%;
+    --primary-foreground: 30 40% 98%;
+    --primary-glow: 340 55% 38%;
+
+    /* Blush rose */
+    --secondary: 12 60% 92%;
+    --secondary-foreground: 340 45% 22%;
+
+    --muted: 20 30% 94%;
+    --muted-foreground: 340 12% 40%;
+
+    /* Rose gold accent */
+    --accent: 14 55% 65%;
+    --accent-foreground: 340 45% 18%;
+    --accent-soft: 14 70% 88%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 30 40% 98%;
+
+    --border: 20 30% 88%;
+    --input: 20 30% 88%;
+    --ring: 340 45% 22%;
+
+    --radius: 0.75rem;
+
+    /* Brand gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(12 60% 95%) 0%, hsl(20 50% 92%) 50%, hsl(14 55% 88%) 100%);
+    --gradient-rose: linear-gradient(135deg, hsl(14 55% 75%), hsl(340 50% 55%));
+    --gradient-plum: linear-gradient(135deg, hsl(340 45% 22%), hsl(340 55% 38%));
+    --gradient-soft: linear-gradient(180deg, hsl(30 40% 98%) 0%, hsl(12 60% 96%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 10px 40px -15px hsl(340 45% 22% / 0.15);
+    --shadow-elegant: 0 20px 60px -20px hsl(340 45% 22% / 0.25);
+    --shadow-glow: 0 0 60px hsl(14 70% 75% / 0.4);
+
+    /* Motion */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1, h2, h3, h4, h5 {
+    @apply font-serif tracking-tight;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-hero { background-image: var(--gradient-hero); }
+  .bg-gradient-rose { background-image: var(--gradient-rose); }
+  .bg-gradient-plum { background-image: var(--gradient-plum); }
+  .bg-gradient-soft { background-image: var(--gradient-soft); }
+
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-elegant { box-shadow: var(--shadow-elegant); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
+
+  .transition-smooth { transition: var(--transition-smooth); }
+
+  .text-balance { text-wrap: balance; }
+}
